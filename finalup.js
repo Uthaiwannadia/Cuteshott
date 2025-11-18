@@ -131,6 +131,6 @@ document.addEventListener("DOMContentLoaded", () => {
     localStorage.removeItem("pic2");
     localStorage.removeItem("pic3");
     localStorage.removeItem("pic4");
-    window.location.href = "upload.html";
+    window.location.href = "index.html";
   });
 });
