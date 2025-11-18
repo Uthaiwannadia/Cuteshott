@@ -1,0 +1,110 @@
+<!doctype html>
+<html lang="th">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Choose Image</title>
+
+  <!-- ใช้ไฟล์ CSS เดิมของน้อง -->
+  <link rel="stylesheet" href="upload.css" />
+</head>
+<body>
+
+  <div class="phone">
+
+    <!-- ครอบโบว์ + header PNG ไว้ด้วยกัน -->
+    <div class="header-wrapper">
+      <!-- โบว์ -->
+      <img src="Mymelodyypic/bowpink.png" alt="Bow" class="topbar__bow" />
+      <!-- แถบหัว PNG -->
+      <img src="Mymelodyypic/chooseimage.png" alt="Menu" class="header-img" />
+    </div>
+
+    <!-- กรอบใหญ่กลาง -->
+    <div class="frame">
+      <div class="choose-wrapper">
+        <div class="grid">
+
+          <div class="slot" data-id="1">
+            <span class="plus">+</span>
+            <p>Picture 1</p>
+            <img class="preview" id="img1" />
+          </div>
+
+          <div class="slot" data-id="2">
+            <span class="plus">+</span>
+            <p>Picture 2</p>
+            <img class="preview" id="img2" />
+          </div>
+
+          <div class="slot" data-id="3">
+            <span class="plus">+</span>
+            <p>Picture 3</p>
+            <img class="preview" id="img3" />
+          </div>
+
+          <div class="slot" data-id="4">
+            <span class="plus">+</span>
+            <p>Picture 4</p>
+            <img class="preview" id="img4" />
+          </div>
+
+        </div>
+      </div>
+<div class="takephoto-wrapper" id="printBtn">
+        <img src="Mymelodyypic/buttongreen.png"
+             class="takephoto-icon"
+             alt="Print button" />
+             </div>
+      
+    </div>
+
+  </div>
+
+  <!-- input สำหรับเลือกไฟล์ (ซ่อนไว้) -->
+  <input type="file" accept="image/*" id="filePicker" hidden />
+
+  <!-- สคริปต์เลือกภาพ + เซฟลง localStorage + ไปหน้า final -->
+  <script>
+    const filePicker = document.getElementById("filePicker");
+    let currentSlot = null;
+
+    // คลิกที่กรอบแต่ละช่อง → เปิดเลือกไฟล์
+    document.querySelectorAll(".slot").forEach(slot => {
+      slot.addEventListener("click", () => {
+        currentSlot = slot.dataset.id;      // "1".."4"
+        filePicker.value = "";              // กันบั๊ก change ไม่ทำงาน
+        filePicker.click();
+      });
+    });
+
+    // เมื่อเลือกไฟล์ได้แล้ว
+    filePicker.addEventListener("change", () => {
+      const file = filePicker.files[0];
+      if (!file || !currentSlot) return;
+
+      const reader = new FileReader();
+      reader.onload = e => {
+        const dataUrl = e.target.result;
+
+        // แสดงพรีวิวในช่อง
+        const img = document.getElementById("img" + currentSlot);
+        img.src = dataUrl;
+        img.style.display = "block";
+
+        // เก็บลง localStorage ให้หน้า final ใช้
+        localStorage.setItem("pic" + currentSlot, dataUrl);
+        console.log("saved: pic" + currentSlot);
+      };
+      reader.readAsDataURL(file);
+    });
+
+    // ปุ่ม Print → ไปหน้า final.html
+    const printBtn = document.getElementById("printBtn");
+    printBtn.addEventListener("click", () => {
+      window.location.href = "finalup.html";
+    });
+  </script>
+
+</body>
+</html>

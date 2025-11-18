@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>camera</title>
+  <link rel="stylesheet" href="camera.css" />
+</head>
+
+<body>
+  <div class="phone">
+
+    <!-- ครอบโบว์ + header PNG ไว้ด้วยกัน -->
+    <div class="header-wrapper">
+      <!-- โบว์ -->
+      <img src="Mymelodyypic/bowpink.png" alt="Bow" class="topbar__bow" />
+      <!-- แถบหัว PNG -->
+      <img src="Mymelodyypic/chooseimage.png" alt="Menu" class="header-img" />
+    </div>
+
+  <div class="photobooth-container" id="booth">
+    <div class="bubble-container"></div>
+    <div class="countdown-timer">3</div>
+    <canvas id="finalCanvas" width="639" height="959" style="display:none;"></canvas>
+
+
+    <!-- live camera -->
+    <video id="liveVideo" autoplay playsinline muted></video>
+
+    <!-- กรอบ PNG 4 ช่อง -->
+    <img class="frame-overlay" src="Mymelodyypic/Framecamera.png" alt="frame overlay" />
+  </div>
+
+  <div class="controls">
+  <button id="takePhoto">
+    <img src="Mymelodyypic/buttontake.png" alt="Capture" class="capture-img">
+  </button>
+  <button id="readyButton" disabled style="display: none;">Ready</button>
+</div>
+  <script src="camera.js"></script>
+
+
+</body>
+</html>
+

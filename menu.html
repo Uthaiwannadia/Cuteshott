@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Menu Page</title>
+  <link rel="stylesheet" href="menu.css" />
+</head>
+<body>
+  <div class="phone">
+    <img src="Mymelodyypic/bowpink.png" alt="Bow" class="topbar__bow" />
+    <img src="Mymelodyypic/menu.png" alt="Menu" class="header-img" />
+
+    <div class="panel">
+      <div class="menu-container">
+        <button id="menu-camera-button">
+          <img src="Mymelodyypic/takephoto.png" alt="Take Photo" />
+        </button>
+        <button id="menu-upload-button">
+          <img src="Mymelodyypic/uploadphoto.png" alt="Upload Photo" />
+          <script>
+          document.getElementById("menu-upload-button").addEventListener("click", function () {
+        window.location.href = "upload.html";
+        });
+         </script>
+        </button>
+      </div>
+    </div>
+
+
+    <img src="Mymelodyypic/cooltext.png" alt="Footer Decoration" class="footer-img" />
+  </div>
+</body>
+</html>

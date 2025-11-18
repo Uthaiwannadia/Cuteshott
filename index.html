@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="th">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>I LUV Photoboot</title>
+  <link rel="stylesheet" href="home.css" />
+</head>
+<body>
+  <main class="phone">
+    <!-- Header -->
+    <header class="topbar" role="banner">
+      <img class="topbar__bow" src="Mymelodyypic/bowpink.png" alt="" aria-hidden="true">
+      <div class="topbar__title">I <span class="heart">❤</span> CUTESHOT</div>
+    </header>
+
+    <!-- พื้นที่ถ่ายรูป -->
+    <section class="panel" role="region" aria-label="camera stage">
+      <div class="index-container">
+        <button id="index-start-button" type="button">
+          <img src="Mymelodyypic/start.png" alt="Start" />
+        </button>
+      </div>
+    </section>
+
+    <!-- เครื่องพิมพ์ -->
+    <section class="printer" aria-label="printer">
+      <img class="printer__paper" src="Mymelodyypic/print.png" alt="printed ticket">
+    </section>
+  </main>
+
+  <script>
+    document.getElementById("index-start-button").addEventListener("click", function () {
+      window.location.href = "menu.html";
+    });
+  </script>
+</body>
+</html>
