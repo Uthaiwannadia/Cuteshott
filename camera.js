@@ -120,7 +120,7 @@ function assemble4Photos() {
       if (loadedCount === shots.length) {
         const finalImage = canvas.toDataURL("image/png");
         localStorage.setItem("final4", finalImage);
-        window.location.href = "final.html";
+        window.location.href = "finaltake.html";
       }
     };
   });
