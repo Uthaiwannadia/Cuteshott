@@ -1,7 +1,7 @@
 /* กรอบมือถือ */
 .phone{
-  width: 430px;
-  min-height: 100vh;
+  width: min(430px, 100%);
+  min-height: 100dvh;
   background: transparent;
   padding: 20px;
   border-radius: 40px;
