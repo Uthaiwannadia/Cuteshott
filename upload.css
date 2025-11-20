@@ -8,7 +8,11 @@
   border-radius: 40px;
   margin: 0 auto;
 }
-
+*,
+*::before,
+*::after{
+  box-sizing: border-box;
+}
 .header-wrapper {
   position: relative;
   width: 100%;
