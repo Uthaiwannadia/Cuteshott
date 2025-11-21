@@ -5,6 +5,7 @@
   padding:16px 16px 32px;
   position:relative;
 }
+
 .header-wrapper {
   position: relative;
   width: 100%;
@@ -37,11 +38,9 @@
   padding: 40px 20px;
   border-radius: 28px;
   border: 2px solid #e2e2e2;
-  position: relative;     /* ⭐ เพิ่มบรรทัดนี้ */
+  position: relative;
   min-height: 600px;
 }
-
-
 
 /* กลุ่ม 4 ช่อง */
 .choose-wrapper{
@@ -90,6 +89,7 @@
   border-radius: 20px;
 }
 
+/* ปุ่มไปหน้า final */
 .takephoto-wrapper {
   position: absolute;
   top: 50%;
