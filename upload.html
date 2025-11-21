@@ -72,7 +72,7 @@
   // คลิกที่กรอบแต่ละช่อง → เปิดเลือกไฟล์
   document.querySelectorAll(".slot").forEach(slot => {
     slot.addEventListener("click", () => {
-      currentSlot = slot.dataset.id; // 1..4
+      currentSlot = slot.dataset.id; // "1".."4"
       filePicker.value = "";         // กันบั๊ก change ไม่ทำงาน
       filePicker.click();
     });
@@ -87,12 +87,12 @@
     reader.onload = e => {
       const dataUrl = e.target.result;
 
-      // แสดงพรีวิว
+      // แสดงพรีวิวในช่อง
       const img = document.getElementById("img" + currentSlot);
       img.src = dataUrl;
       img.style.display = "block";
 
-      // เซฟลง localStorage
+      // เก็บลง localStorage ให้หน้า final ใช้
       localStorage.setItem("pic" + currentSlot, dataUrl);
       console.log("Saved: pic" + currentSlot);
     };
@@ -100,23 +100,24 @@
     reader.readAsDataURL(file);
   });
 
-  // ปุ่ม Print → เช็กว่ามีรูปครบก่อน ไปหน้า finalup.html
+  // ปุ่ม Print → เช็กจากรูปในช่องจริง ๆ ว่าครบ 4 ยัง
   const printBtn = document.getElementById("printBtn");
   printBtn.addEventListener("click", () => {
-    const keys = ["pic1", "pic2", "pic3", "pic4"];
+    const ids = ["img1", "img2", "img3", "img4"];
 
-    for (const key of keys) {
-      if (!localStorage.getItem(key)) {
+    for (const id of ids) {
+      const img = document.getElementById(id);
+      // ถ้าไม่มี src แปลว่ายังไม่ได้เลือกรูปช่องนั้น
+      if (!img.src) {
         alert("กรุณาเลือกรูปให้ครบ 4 รูปก่อนน้า ♡");
-        return; //❗ ถ้ายังไม่ครบ จะไม่ยอมให้ไปหน้า final
+        return;
       }
     }
 
-    // พร้อมแล้ว ไปหน้า finalup.html
+    // ถ้าครบแล้ว ค่อยไปหน้า finalup.html
     window.location.href = "finalup.html";
   });
-</script>      
-  </script>
+</script>
 
 </body>
 </html>
