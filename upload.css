@@ -1,5 +1,3 @@
-
-
 .phone{
   width: 100%;
   max-width: 430px;      
@@ -12,6 +10,10 @@
 *,
 *::before,
 *::after
+{
+  box-sizing: border-box;
+}
+
 .header-wrapper {
   position: relative;
   width: 100%;
