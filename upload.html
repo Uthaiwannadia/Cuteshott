@@ -1,3 +1,4 @@
+
 <!doctype html>
 <html lang="th">
 <head>
@@ -65,59 +66,46 @@
   <input type="file" accept="image/*" id="filePicker" hidden />
 
   <!-- สคริปต์เลือกภาพ + เซฟลง localStorage + ไปหน้า final -->
- <script>
-  const filePicker = document.getElementById("filePicker");
-  let currentSlot = null;
+  <script>
+    const filePicker = document.getElementById("filePicker");
+    let currentSlot = null;
 
-  // คลิกที่กรอบแต่ละช่อง → เปิดเลือกไฟล์
-  document.querySelectorAll(".slot").forEach(slot => {
-    slot.addEventListener("click", () => {
-      currentSlot = slot.dataset.id; // "1".."4"
-      filePicker.value = "";         // กันบั๊ก change ไม่ทำงาน
-      filePicker.click();
+    // คลิกที่กรอบแต่ละช่อง → เปิดเลือกไฟล์
+    document.querySelectorAll(".slot").forEach(slot => {
+      slot.addEventListener("click", () => {
+        currentSlot = slot.dataset.id;      // "1".."4"
+        filePicker.value = "";              // กันบั๊ก change ไม่ทำงาน
+        filePicker.click();
+      });
     });
-  });
 
-  // เมื่อเลือกไฟล์ได้แล้ว
-  filePicker.addEventListener("change", () => {
-    const file = filePicker.files[0];
-    if (!file || !currentSlot) return;
+    // เมื่อเลือกไฟล์ได้แล้ว
+    filePicker.addEventListener("change", () => {
+      const file = filePicker.files[0];
+      if (!file || !currentSlot) return;
 
-    const reader = new FileReader();
-    reader.onload = e => {
-      const dataUrl = e.target.result;
+      const reader = new FileReader();
+      reader.onload = e => {
+        const dataUrl = e.target.result;
 
-      // แสดงพรีวิวในช่อง
-      const img = document.getElementById("img" + currentSlot);
-      img.src = dataUrl;
-      img.style.display = "block";
+        // แสดงพรีวิวในช่อง
+        const img = document.getElementById("img" + currentSlot);
+        img.src = dataUrl;
+        img.style.display = "block";
 
-      // เก็บลง localStorage ให้หน้า final ใช้
-      localStorage.setItem("pic" + currentSlot, dataUrl);
-      console.log("Saved: pic" + currentSlot);
-    };
+        // เก็บลง localStorage ให้หน้า final ใช้
+        localStorage.setItem("pic" + currentSlot, dataUrl);
+        console.log("saved: pic" + currentSlot);
+      };
+      reader.readAsDataURL(file);
+    });
 
-    reader.readAsDataURL(file);
-  });
-
-  // ปุ่ม Print → เช็กจากรูปในช่องจริง ๆ ว่าครบ 4 ยัง
-  const printBtn = document.getElementById("printBtn");
-  printBtn.addEventListener("click", () => {
-    const ids = ["img1", "img2", "img3", "img4"];
-
-    for (const id of ids) {
-      const img = document.getElementById(id);
-      // ถ้าไม่มี src แปลว่ายังไม่ได้เลือกรูปช่องนั้น
-      if (!img.src) {
-        alert("กรุณาเลือกรูปให้ครบ 4 รูปก่อนน้า ♡");
-        return;
-      }
-    }
-
-    // ถ้าครบแล้ว ค่อยไปหน้า finalup.html
-    window.location.href = "finalup.html";
-  });
-</script>
+    // ปุ่ม Print → ไปหน้า final.html
+    const printBtn = document.getElementById("printBtn");
+    printBtn.addEventListener("click", () => {
+      window.location.href = "finalup.html";
+    });
+  </script>
 
 </body>
 </html>
