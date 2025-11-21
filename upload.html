@@ -66,44 +66,101 @@
 
   <!-- สคริปต์เลือกภาพ + เซฟลง localStorage + ไปหน้า final -->
   <script>
-    const filePicker = document.getElementById("filePicker");
-    let currentSlot = null;
+  // ล้างรูปเก่า ป้องกันค่าเก่าค้าง
+  ["pic1","pic2","pic3","pic4"].forEach(k => localStorage.removeItem(k));
 
-    // คลิกที่กรอบแต่ละช่อง → เปิดเลือกไฟล์
-    document.querySelectorAll(".slot").forEach(slot => {
-      slot.addEventListener("click", () => {
-        currentSlot = slot.dataset.id;      // "1".."4"
-        filePicker.value = "";              // กันบั๊ก change ไม่ทำงาน
-        filePicker.click();
-      });
-    });
+  const filePicker = document.getElementById("filePicker");
+  let currentSlot = null;
 
-    // เมื่อเลือกไฟล์ได้แล้ว
-    filePicker.addEventListener("change", () => {
-      const file = filePicker.files[0];
-      if (!file || !currentSlot) return;
-
+  // ฟังก์ชันย่อรูปด้วย canvas
+  function resizeImage(file, maxSize = 1200) {
+    return new Promise((resolve, reject) => {
       const reader = new FileReader();
       reader.onload = e => {
-        const dataUrl = e.target.result;
+        const img = new Image();
+        img.onload = () => {
+          let w = img.width;
+          let h = img.height;
 
-        // แสดงพรีวิวในช่อง
-        const img = document.getElementById("img" + currentSlot);
-        img.src = dataUrl;
-        img.style.display = "block";
+          // ย่อให้ด้านที่ยาวสุด = maxSize (แต่ไม่ครอปเนื้อหารูป)
+          if (w > h) {
+            if (w > maxSize) {
+              h = Math.round(h * maxSize / w);
+              w = maxSize;
+            }
+          } else {
+            if (h > maxSize) {
+              w = Math.round(w * maxSize / h);
+              h = maxSize;
+            }
+          }
 
-        // เก็บลง localStorage ให้หน้า final ใช้
-        localStorage.setItem("pic" + currentSlot, dataUrl);
-        console.log("saved: pic" + currentSlot);
+          const canvas = document.createElement("canvas");
+          canvas.width = w;
+          canvas.height = h;
+          const ctx = canvas.getContext("2d");
+          ctx.drawImage(img, 0, 0, w, h);
+
+          // แปลงเป็น JPEG คุณภาพ 0.8 (เล็กลงมาก)
+          const dataUrl = canvas.toDataURL("image/jpeg", 0.8);
+          resolve(dataUrl);
+        };
+        img.onerror = reject;
+        img.src = e.target.result;
       };
+      reader.onerror = reject;
       reader.readAsDataURL(file);
     });
+  }
 
-    // ปุ่ม Print → ไปหน้า final.html
-    const printBtn = document.getElementById("printBtn");
-    printBtn.addEventListener("click", () => {
-      window.location.href = "finalup.html";
+  // คลิกที่กรอบแต่ละช่อง → เปิดเลือกไฟล์
+  document.querySelectorAll(".slot").forEach(slot => {
+    slot.addEventListener("click", () => {
+      currentSlot = slot.dataset.id;      // "1".."4"
+      filePicker.value = "";              // กันบั๊ก change ไม่ทำงาน
+      filePicker.click();
     });
-  </script>
+  });
 
-</body></html></html>
+  // เมื่อเลือกไฟล์ได้แล้ว
+  filePicker.addEventListener("change", async () => {
+    const file = filePicker.files[0];
+    if (!file || !currentSlot) return;
+
+    try {
+      // ✅ ย่อรูปก่อน
+      const dataUrl = await resizeImage(file, 1200);
+
+      // แสดงพรีวิวในช่อง
+      const img = document.getElementById("img" + currentSlot);
+      img.src = dataUrl;
+      img.style.display = "block";
+
+      // เก็บลง localStorage ให้หน้า final ใช้
+      try {
+        localStorage.setItem("pic" + currentSlot, dataUrl);
+        console.log("saved: pic" + currentSlot, dataUrl.length);
+      } catch (e) {
+        alert("รูปใหญ่เกินไป ทำให้เก็บรูปไม่ครบ ลองใช้รูปที่ไฟล์เล็กลงหรือลดจำนวนรูปนะคะ");
+      }
+    } catch (err) {
+      console.error(err);
+      alert("โหลดรูปไม่สำเร็จ ลองใหม่อีกครั้งนะคะ");
+    }
+  });
+
+  // ปุ่ม Print → ไปหน้า finalup.html (จะเหมือนเดิมแต่ถ้าอยากเช็คว่าเลือกครบก็ทำเพิ่มได้)
+  const printBtn = document.getElementById("printBtn");
+  printBtn.addEventListener("click", () => {
+    // ถ้าอยากบังคับให้ครบ 4 รูปก่อน:
+    const required = ["1","2","3","4"];
+    for (let id of required) {
+      if (!localStorage.getItem("pic" + id)) {
+        alert(`กรุณาเลือกรูปให้ครบ 4 รูปค่ะ (ยังขาดรูปที่ ${id})`);
+        return;
+      }
+    }
+    window.location.href = "finalup.html";
+  });
+</script>
+</body></html>
