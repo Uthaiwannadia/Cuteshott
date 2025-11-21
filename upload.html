@@ -141,7 +141,7 @@
         localStorage.setItem("pic" + currentSlot, dataUrl);
         console.log("saved: pic" + currentSlot, dataUrl.length);
       } catch (e) {
-        alert("รูปใหญ่เกินไป ทำให้เก็บรูปไม่ครบ ลองใช้รูปที่ไฟล์เล็กลงหรือลดจำนวนรูปนะคะ");
+        alert("ไฟล์รูปขนาดใหญ่เกินไป ลองใช้รูปที่ไฟล์เล็กลงนะคะ");
       }
     } catch (err) {
       console.error(err);
@@ -156,7 +156,7 @@
     const required = ["1","2","3","4"];
     for (let id of required) {
       if (!localStorage.getItem("pic" + id)) {
-        alert(`กรุณาเลือกรูปให้ครบ 4 รูปค่ะ (ยังขาดรูปที่ ${id})`);
+        alert(`เลือกรูปให้ครบ 4 รูปนะคะ :) (ยังขาดรูปที่ ${id})`);
         return;
       }
     }
