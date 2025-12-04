@@ -120,7 +120,7 @@ document.addEventListener("DOMContentLoaded", () => {
   // ⭐ Download
   downloadBtn.addEventListener("click", () => {
     const link = document.createElement("a");
-    link.download = "cuteshot.png";
+    link.download = "Myphoto.png";
     link.href = canvas.toDataURL("image/png");
     link.click();
   });
