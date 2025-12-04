@@ -74,7 +74,7 @@ document.addEventListener("DOMContentLoaded", () => {
       if (!blob) return;
       const a = document.createElement('a');
       a.href = URL.createObjectURL(blob);
-      a.download = 'photobooth.png';
+      a.download = 'Myphoto.png';
       a.click();
       URL.revokeObjectURL(a.href);
     });
